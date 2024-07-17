@@ -32,21 +32,41 @@ dispersion x y z = maximum [x, y, z] - minimum [x, y, z]
     a la que le sirven árboles de entre 400 y 1000 kilos, 
     un pino fuera de este rango no le sirve a la fábrica. -}
 
-{- Definir la función pesoPino, recibe la altura de un pino y devuelve su peso. -}
+{-  Definir la función pesoPino, recibe la altura de un pino y devuelve su peso. -}
 
 pesoPino :: Float -> Int
 pesoPino altura
     | altura <= 3 = round $ altura * 300
     | otherwise   = 900 + round ((altura - 3) * 200)
 
-{- Definir la función esPesoUtil, recibe un peso en kg y responde si un pino 
-de ese peso le sirve a la fábrica -}
+{-  Definir la función esPesoUtil, recibe un peso en kg y responde si un pino 
+    de ese peso le sirve a la fábrica -}
 
 esPesoUtil :: Int -> Bool
 esPesoUtil peso = peso >= 400 && peso <= 1000
 
-{- Definir la función sirvePino, recibe la altura de un pino y responde si un pino 
-de ese peso le sirve a la fábrica. Definir sirvePino usando composición -}
+{-  Definir la función sirvePino, recibe la altura de un pino y responde si un pino 
+    de ese peso le sirve a la fábrica. Definir sirvePino usando composición -}
 
 sirvePino :: Float -> Bool
 sirvePino = esPesoUtil . pesoPino
+
+
+{-  Trabajamos con tres númc
+    Contamos también con una funcion dispersion, que dado tres numeros nos devuelve la dispersión. 
+    No hay que definirla. -}
+
+{-  diasParejos: son días parejos si la dispersión es chica (menos de 30 cm) -}
+
+diasParejos :: Int -> Int -> Int -> Bool
+diasParejos x y z = dispersion x y z < 30
+
+{-  diasLocos: son días locos si la dispersión es grande (más de un metro) -}
+
+diasLocos :: Int -> Int -> Int -> Bool
+diasLocos x y z = dispersion x y z > 100
+
+{-  diasNormales, son días normales si no son ni parejos ni locos. -}
+
+diasNormales :: Int -> Int -> Int -> Bool
+diasNormales x y z = not (diasParejos x y z) && not (diasLocos x y z)
